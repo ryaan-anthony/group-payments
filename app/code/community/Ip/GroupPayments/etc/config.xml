@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config>
+
+    <modules>
+        <Ip_GroupPayments>
+            <version>0.1.0</version>
+        </Ip_GroupPayments>
+    </modules>
+
+    <global>
+
+        <blocks>
+            <groupPayments>
+                <class>Ip_GroupPayments_Block</class>
+            </groupPayments>
+            <adminhtml>
+                <rewrite>
+                    <customer_group_edit_form>Ip_GroupPayments_Block_Adminhtml_Customer_Group_Form</customer_group_edit_form>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+
+        <models>
+            <groupPayments>
+                <class>Ip_GroupPayments_Model</class>
+            </groupPayments>
+        </models>
+
+        <events>
+            <payment_method_is_active>
+                <observers>
+                    <group_payments_observer>
+                        <type>singleton</type>
+                        <class>groupPayments/observer</class>
+                        <method>isAvailable</method>
+                    </group_payments_observer>
+                </observers>
+            </payment_method_is_active>
+        </events>
+
+        <resources>
+            <groupPayments_setup>
+                <setup>
+                    <module>Ip_GroupPayments</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </groupPayments_setup>
+        </resources>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <groupPayments before="Mage_Adminhtml">Ip_GroupPayments_Adminhtml</groupPayments>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+</config>
